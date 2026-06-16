@@ -142,6 +142,38 @@ async updateQuickPaneShortcut(shortcut: string | null) : Promise<Result<null, st
     if(e instanceof Error) throw e;
     else return { status: "error", error: e  as any };
 }
+},
+async getProcurementItems() : Promise<Result<ProcurementItem[], string>> {
+    try {
+    return { status: "ok", data: await TAURI_INVOKE("get_procurement_items") };
+} catch (e) {
+    if(e instanceof Error) throw e;
+    else return { status: "error", error: e  as any };
+}
+},
+async createProcurementItem(item: ProcurementItem) : Promise<Result<null, string>> {
+    try {
+    return { status: "ok", data: await TAURI_INVOKE("create_procurement_item", { item }) };
+} catch (e) {
+    if(e instanceof Error) throw e;
+    else return { status: "error", error: e  as any };
+}
+},
+async updateProcurementItem(item: ProcurementItem) : Promise<Result<null, string>> {
+    try {
+    return { status: "ok", data: await TAURI_INVOKE("update_procurement_item", { item }) };
+} catch (e) {
+    if(e instanceof Error) throw e;
+    else return { status: "error", error: e  as any };
+}
+},
+async deleteProcurementItem(productId: string) : Promise<Result<null, string>> {
+    try {
+    return { status: "ok", data: await TAURI_INVOKE("delete_procurement_item", { productId }) };
+} catch (e) {
+    if(e instanceof Error) throw e;
+    else return { status: "error", error: e  as any };
+}
 }
 }
 
@@ -171,6 +203,7 @@ quick_pane_shortcut: string | null;
  */
 language: string | null }
 export type JsonValue = null | boolean | number | string | JsonValue[] | Partial<{ [key in string]: JsonValue }>
+export type ProcurementItem = { product_id: string; project: string; specifications: string | null; expected_quantity: number; cost: number }
 /**
  * Error types for recovery operations (typed for frontend matching)
  */

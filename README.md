@@ -101,6 +101,7 @@ git clone <your-repo>
 cd your-app
 npm install
 npm run dev
+npm run tauri:dev
 ```
 
 ## Documentation

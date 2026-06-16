@@ -8,6 +8,7 @@ mod bindings;
 mod commands;
 mod types;
 mod utils;
+mod db;
 
 use tauri::{Manager, RunEvent, WindowEvent};
 
@@ -107,6 +108,18 @@ pub fn run() {
                 "App handle initialized for package: {}",
                 app.package_info().name
             );
+
+            // Initialize database
+            let db_url = "sqlite:materialpass.db";
+            match tauri::async_runtime::block_on(db::DbState::new(db_url)) {
+                Ok(state) => {
+                    app.manage(state);
+                    log::info!("Database initialized successfully");
+                }
+                Err(e) => {
+                    log::error!("Failed to initialize database: {e}");
+                }
+            }
 
             // Set up global shortcut plugin (without any shortcuts - we register them separately)
             #[cfg(desktop)]

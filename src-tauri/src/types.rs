@@ -19,6 +19,48 @@ pub static FILENAME_PATTERN: LazyLock<Regex> = LazyLock::new(|| {
 });
 
 // ============================================================================
+// Material Pass Models
+// ============================================================================
+
+#[derive(Debug, Clone, Serialize, Deserialize, Type, sqlx::FromRow)]
+pub struct ProcurementItem {
+    pub product_id: String,
+    pub project: String,
+    pub specifications: Option<String>,
+    pub expected_quantity: f64,
+    pub cost: f64,
+}
+
+#[derive(Debug, Clone, Serialize, Deserialize, Type, sqlx::FromRow)]
+pub struct MaterialMasterItem {
+    pub product_id: String,
+    pub name: String,
+    pub specifications: Option<String>,
+    pub unit: String,
+    pub category: String,
+}
+
+#[derive(Debug, Clone, Serialize, Deserialize, Type, sqlx::FromRow)]
+pub struct MaterialLogItem {
+    pub id: Option<i64>,
+    pub product_id: String,
+    pub date: String,
+    pub quantity: f64,
+}
+
+#[derive(Debug, Clone, Serialize, Deserialize, Type, sqlx::FromRow)]
+pub struct InventorySummaryItem {
+    pub product_id: String,
+    pub name: String,
+    pub specifications: Option<String>,
+    pub unit: String,
+    pub category: String,
+    pub total_in: f64,
+    pub total_out: f64,
+    pub ending_inventory: f64,
+}
+
+// ============================================================================
 // Preferences
 // ============================================================================
 
