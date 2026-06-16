@@ -5,6 +5,6 @@
 
 pub mod notifications;
 pub mod preferences;
+pub mod procurement;
 pub mod quick_pane;
 pub mod recovery;
-pub mod procurement;

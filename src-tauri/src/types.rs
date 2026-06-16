@@ -32,6 +32,7 @@ pub struct ProcurementItem {
 }
 
 #[derive(Debug, Clone, Serialize, Deserialize, Type, sqlx::FromRow)]
+#[allow(dead_code)]
 pub struct MaterialMasterItem {
     pub product_id: String,
     pub name: String,
@@ -41,6 +42,7 @@ pub struct MaterialMasterItem {
 }
 
 #[derive(Debug, Clone, Serialize, Deserialize, Type, sqlx::FromRow)]
+#[allow(dead_code)]
 pub struct MaterialLogItem {
     pub id: Option<i64>,
     pub product_id: String,
@@ -49,6 +51,7 @@ pub struct MaterialLogItem {
 }
 
 #[derive(Debug, Clone, Serialize, Deserialize, Type, sqlx::FromRow)]
+#[allow(dead_code)]
 pub struct InventorySummaryItem {
     pub product_id: String,
     pub name: String,

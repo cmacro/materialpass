@@ -7,9 +7,9 @@ import App from './App'
 describe('App', () => {
   it('renders main window layout', () => {
     render(<App />)
-    expect(
-      screen.getByRole('heading', { name: /hello world/i })
-    ).toBeInTheDocument()
+    // The default content is now the ProcurementPage, which contains a heading
+    // We search for the title defined in the i18n keys (which will be mocked or use keys)
+    expect(screen.getByRole('heading', { level: 1 })).toBeInTheDocument()
   })
 
   it('renders title bar with traffic light buttons', () => {

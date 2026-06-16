@@ -6,9 +6,9 @@
 
 mod bindings;
 mod commands;
+mod db;
 mod types;
 mod utils;
-mod db;
 
 use tauri::{Manager, RunEvent, WindowEvent};
 

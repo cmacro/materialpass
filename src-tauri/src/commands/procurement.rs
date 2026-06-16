@@ -1,13 +1,15 @@
-use tauri::{State};
 use crate::db::DbState;
-use crate::types::{ProcurementItem};
+use crate::types::ProcurementItem;
+use tauri::State;
 
 #[tauri::command]
 #[specta::specta]
-pub async fn get_procurement_items(state: State<'_, DbState>) -> Result<Vec<ProcurementItem>, String> {
+pub async fn get_procurement_items(
+    state: State<'_, DbState>,
+) -> Result<Vec<ProcurementItem>, String> {
     let pool = &state.pool;
     let items = sqlx::query_as::<_, ProcurementItem>(
-        "SELECT product_id, project, specifications, expected_quantity, cost FROM procurement"
+        "SELECT product_id, project, specifications, expected_quantity, cost FROM procurement",
     )
     .fetch_all(pool.as_ref())
     .await
@@ -20,10 +22,10 @@ pub async fn get_procurement_items(state: State<'_, DbState>) -> Result<Vec<Proc
 #[specta::specta]
 pub async fn create_procurement_item(
     state: State<'_, DbState>,
-    item: ProcurementItem
+    item: ProcurementItem,
 ) -> Result<(), String> {
     let pool = &state.pool;
-    
+
     if item.product_id.is_empty() {
         return Err("Product ID cannot be empty".to_string());
     }
@@ -53,7 +55,7 @@ pub async fn create_procurement_item(
 #[specta::specta]
 pub async fn update_procurement_item(
     state: State<'_, DbState>,
-    item: ProcurementItem
+    item: ProcurementItem,
 ) -> Result<(), String> {
     let pool = &state.pool;
 
@@ -76,17 +78,15 @@ pub async fn update_procurement_item(
 #[specta::specta]
 pub async fn delete_procurement_item(
     state: State<'_, DbState>,
-    product_id: String
+    product_id: String,
 ) -> Result<(), String> {
     let pool = &state.pool;
 
-    sqlx::query(
-        "DELETE FROM procurement WHERE product_id = ?"
-    )
-    .bind(product_id)
-    .execute(pool.as_ref())
-    .await
-    .map_err(|e| e.to_string())?;
+    sqlx::query("DELETE FROM procurement WHERE product_id = ?")
+        .bind(product_id)
+        .execute(pool.as_ref())
+        .await
+        .map_err(|e| e.to_string())?;
 
     Ok(())
 }
